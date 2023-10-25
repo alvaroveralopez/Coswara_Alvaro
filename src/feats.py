@@ -102,8 +102,27 @@ class FeatureExtractor:
         s = np.concatenate([s[start:end] for start, end in speech_indices])
         # apply a pre-emphasis filter
         s = librosa.effects.preemphasis(s, coef=0.97)
+
         # normalize
-        s /= np.max(np.abs(s))
+        # s /= np.max(np.abs(s))
+
+        '''
+        try:
+            s /= np.max(np.abs(s))
+        except ZeroDivisionError:
+            # Handle the case where division by zero occurs.
+            s = np.zeros_like(s)  # Or any other appropriate action.
+    
+
+        if np.isnan(s).any() or np.isinf(s).any():
+            # Handle the case where NaN or infinity values are present.
+            s = np.zeros_like(s)  # Or any other appropriate action.
+        else:
+            s /= np.max(np.abs(s))
+        '''
+        epsilon = 1e-9
+        s /= (np.max(np.abs(s)) + epsilon)
+
         return torch.from_numpy(s), sr
 
     @staticmethod

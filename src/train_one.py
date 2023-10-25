@@ -7,22 +7,22 @@ from src.train_all import run_exp
 if __name__ == '__main__':
     # Parse arguments
     parser = argparse.ArgumentParser()
-    parser.add_argument('-r', default='/home/jsanhcez/Documentos/Proyectos/06_TODO_COPERIA/repos/coperia_api')
+    parser.add_argument('-r', default='C:/Users/alvar/PycharmProjects/corilga_api')
     args = parser.parse_args()
 
     # Define important paths
     root_path = args.r
     data_path = os.path.join(root_path, 'dataset/')
-    csv_path = os.path.join(data_path, 'dicoperia_metadata.csv')
-    wav_path = os.path.join(data_path, 'wav_48000kHz/')
+    wav_path = os.path.join(data_path, 'Extracted_data/')
+    csv_path = os.path.join(data_path, 'global_data.csv')
     results_path = os.path.join(root_path, 'results')
 
     # Define model parameters
-    model_name = 'RandomForest'
-    k_folds, seed = 0, 42
+    model_name = 'LogisticRegression'
+    k_folds, seed = 4, 70
 
     # Define filters
-    filters = {"audio_type": ["/cough/"], "audio_moment": ["before"]}
+    filters = {"audio_type": ["cough-heavy"]}
 
     # Define features
     feats_config = load_config_from_json(os.path.join(root_path, 'config', 'feature_config.json'))

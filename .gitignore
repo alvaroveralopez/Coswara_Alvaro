@@ -110,3 +110,7 @@ venv.bak/
 data/*
 *.wav
 /.env.keycloak
+/dataset/Extracted_data/
+/results/
+/results_40/
+/mlruns/
